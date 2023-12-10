@@ -1,0 +1,3913 @@
+{
+	"info": {
+		"_postman_id": "e2a2b117-29ab-460e-86d1-210d296b402f",
+		"name": "fp_col",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21489680"
+	},
+	"item": [
+		{
+			"name": "oauth_token_user_ab",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"ab_token\", pm.response.json()[\"id_token\"]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"grant_type\": \"password\",\r\n    \"username\": \"{{ab_email}}\",\r\n    \"password\": \"{{ab_password}}\",\r\n    \"client_id\": \"{{client_id}}\",\r\n    \"client_secret\": \"{{client_secret}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dev-fbvuehcfmibspn1j.us.auth0.com/oauth/token",
+					"protocol": "https",
+					"host": [
+						"dev-fbvuehcfmibspn1j",
+						"us",
+						"auth0",
+						"com"
+					],
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "oauth_token_user_ef",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"ef_token\", pm.response.json()[\"id_token\"]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"grant_type\": \"password\",\r\n    \"username\": \"{{ef_email}}\",\r\n    \"password\": \"{{ef_password}}\",\r\n    \"client_id\": \"{{client_id}}\",\r\n    \"client_secret\": \"{{client_secret}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dev-fbvuehcfmibspn1j.us.auth0.com/oauth/token",
+					"protocol": "https",
+					"host": [
+						"dev-fbvuehcfmibspn1j",
+						"us",
+						"auth0",
+						"com"
+					],
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "decode_user_ab",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/decode",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"decode"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "decode_user_ef",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/decode",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"decode"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/users",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_items_ab_1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"ab_item_1_id\", pm.response.json()[\"id\"]);\r",
+							"\r",
+							"\r",
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Leaf Blower\");\r",
+							"    pm.expect(pm.response.json()[\"description\"]).to.eq(\"Electric\");\r",
+							"    pm.expect(pm.response.json()[\"value\"]).to.eq(200);\r",
+							"    pm.expect(pm.response.json()[\"loanable\"]).to.eq(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Leaf Blower\",\r\n    \"description\": \"Electric\",\r\n    \"value\": 200,\r\n    \"loanable\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_items_ab_2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"ab_item_2_id\", pm.response.json()[\"id\"]);\r",
+							"\r",
+							"\r",
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Rake\");\r",
+							"    pm.expect(pm.response.json()[\"description\"]).to.eq(\"Wood and plastic\");\r",
+							"    pm.expect(pm.response.json()[\"value\"]).to.eq(15);\r",
+							"    pm.expect(pm.response.json()[\"loanable\"]).to.eq(true);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Rake\",\r\n    \"description\": \"Wood and plastic\",\r\n    \"value\": 15,\r\n    \"loanable\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_items_ab_3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"ab_item_3_id\", pm.response.json()[\"id\"]);\r",
+							"\r",
+							"\r",
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Mower\");\r",
+							"    pm.expect(pm.response.json()[\"description\"]).to.eq(\"Gas powered push mower\");\r",
+							"    pm.expect(pm.response.json()[\"value\"]).to.eq(305);\r",
+							"    pm.expect(pm.response.json()[\"loanable\"]).to.eq(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Mower\",\r\n    \"description\": \"Gas powered push mower\",\r\n    \"value\": 305,\r\n    \"loanable\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_items_ab_4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"ab_item_4_id\", pm.response.json()[\"id\"]);\r",
+							"\r",
+							"\r",
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Snow Shovel\");\r",
+							"    pm.expect(pm.response.json()[\"description\"]).to.eq(\"Plastic shovel\");\r",
+							"    pm.expect(pm.response.json()[\"value\"]).to.eq(10);\r",
+							"    pm.expect(pm.response.json()[\"loanable\"]).to.eq(true);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Snow Shovel\",\r\n    \"description\": \"Plastic shovel\",\r\n    \"value\": 10,\r\n    \"loanable\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_items_ab_5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"ab_item_5_id\", pm.response.json()[\"id\"]);\r",
+							"\r",
+							"\r",
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Car Jack\");\r",
+							"    pm.expect(pm.response.json()[\"description\"]).to.eq(\"Metal with rotating hand crank\");\r",
+							"    pm.expect(pm.response.json()[\"value\"]).to.eq(75);\r",
+							"    pm.expect(pm.response.json()[\"loanable\"]).to.eq(true);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Car Jack\",\r\n    \"description\": \"Metal with rotating hand crank\",\r\n    \"value\": 75,\r\n    \"loanable\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_items_ab_6",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"ab_item_6_id\", pm.response.json()[\"id\"]);\r",
+							"\r",
+							"\r",
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Weed Wacker\");\r",
+							"    pm.expect(pm.response.json()[\"description\"]).to.eq(\"Electric\");\r",
+							"    pm.expect(pm.response.json()[\"value\"]).to.eq(199);\r",
+							"    pm.expect(pm.response.json()[\"loanable\"]).to.eq(false);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Weed Wacker\",\r\n    \"description\": \"Electric\",\r\n    \"value\": 199,\r\n    \"loanable\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_items_ef_1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"ef_item_1_id\", pm.response.json()[\"id\"]);\r",
+							"\r",
+							"\r",
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Wheelbarrow\");\r",
+							"    pm.expect(pm.response.json()[\"description\"]).to.eq(\"\");\r",
+							"    pm.expect(pm.response.json()[\"value\"]).to.eq(40);\r",
+							"    pm.expect(pm.response.json()[\"loanable\"]).to.eq(true);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Wheelbarrow\",\r\n    \"description\": \"\",\r\n    \"value\": 40,\r\n    \"loanable\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_items_ef_2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"ef_item_2_id\", pm.response.json()[\"id\"]);\r",
+							"\r",
+							"\r",
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Screwdriver\");\r",
+							"    pm.expect(pm.response.json()[\"description\"]).to.eq(\"\");\r",
+							"    pm.expect(pm.response.json()[\"value\"]).to.eq(1);\r",
+							"    pm.expect(pm.response.json()[\"loanable\"]).to.eq(true);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Screwdriver\",\r\n    \"description\": \"\",\r\n    \"value\": 1,\r\n    \"loanable\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_items_ef_3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"ef_item_3_id\", pm.response.json()[\"id\"]);\r",
+							"\r",
+							"\r",
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Boat Engine\");\r",
+							"    pm.expect(pm.response.json()[\"description\"]).to.eq(\"Mountable on a small boat\");\r",
+							"    pm.expect(pm.response.json()[\"value\"]).to.eq(999);\r",
+							"    pm.expect(pm.response.json()[\"loanable\"]).to.eq(false);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Boat Engine\",\r\n    \"description\": \"Mountable on a small boat\",\r\n    \"value\": 999,\r\n    \"loanable\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_items_bad_content_type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(415);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Boat Engine\",\r\n    \"description\": \"Mountable on a small boat\",\r\n    \"value\": 999,\r\n    \"loanable\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_items_bad_accept",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(406);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Boat Engine\",\r\n    \"description\": \"Mountable on a small boat\",\r\n    \"value\": 999,\r\n    \"loanable\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_items_bad_jwt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "42",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Boat Engine\",\r\n    \"description\": \"Mountable on a small boat\",\r\n    \"value\": 999,\r\n    \"loanable\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_items_bad_req_missing_name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"description\": \"\",\r\n    \"value\": 42,\r\n    \"loanable\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_items_owned_by_ab_page_1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"items\"].length).to.eq(5);\r",
+							"    pm.environment.set(\"next_link\", pm.response.json()[\"next\"]);\r",
+							"    pm.expect(pm.response.json()[\"next\"]).to.eq(pm.environment.get(\"app_url\") + \"/items?limit=5&offset=5\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_items_owned_by_ab_page_2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"items\"].length).to.eq(1);\r",
+							"    pm.expect(pm.response.text()).to.not.include(\"next\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{next_link}}",
+					"host": [
+						"{{next_link}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_items_owned_by_ef_only_page",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"items\"].length).to.eq(3);\r",
+							"    pm.expect(pm.response.text()).to.not.include(\"next\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_items_publicly_viewable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"items\"].length).to.eq(5);\r",
+							"    pm.expect(pm.response.text()).to.not.include(\"next\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "items_bad_method",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_item_ab_1_as_ab",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Leaf Blower\");\r",
+							"    pm.expect(pm.response.json()[\"description\"]).to.eq(\"Electric\");\r",
+							"    pm.expect(pm.response.json()[\"value\"]).to.eq(200);\r",
+							"    pm.expect(pm.response.json()[\"loanable\"]).to.eq(false);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_item_ab_1_as_ef_fail_since_not_loanable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Item not available\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_item_ab_2_as_ef_success_since_loanable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Rake\");\r",
+							"    pm.expect(pm.response.json()[\"description\"]).to.eq(\"Wood and plastic\");\r",
+							"    pm.expect(pm.response.json()[\"value\"]).to.eq(15);\r",
+							"    pm.expect(pm.response.json()[\"loanable\"]).to.eq(true);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_2_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put_item_ab_6_as_ab_success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Weed Destroyer 2000\");\r",
+							"    pm.expect(pm.response.json()[\"description\"]).to.eq(\"Nuclear powered, lead shielded\");\r",
+							"    pm.expect(pm.response.json()[\"value\"]).to.eq(999);\r",
+							"    pm.expect(pm.response.json()[\"loanable\"]).to.eq(true);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Weed Destroyer 2000\",\r\n    \"description\": \"Nuclear powered, lead shielded\",\r\n    \"value\": 999,\r\n    \"loanable\": true\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_6_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_6_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put_item_ab_6_as_ef_fail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Item not owned\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Cheap Thing\",\r\n    \"description\": \"Trying to destroy another users item\",\r\n    \"value\": 1,\r\n    \"loanable\": true\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_6_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_6_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch_item_ab_3_as_ab_success_make_loanable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Mower\");\r",
+							"    pm.expect(pm.response.json()[\"description\"]).to.eq(\"Gas powered push mower\");\r",
+							"    pm.expect(pm.response.json()[\"value\"]).to.eq(305);\r",
+							"    pm.expect(pm.response.json()[\"loanable\"]).to.eq(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"loanable\": true\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_3_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch_item_ab_3_as_ef_fail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Item not owned\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"loanable\": false\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_3_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch_item_ab_1_as_ab_success_make_loanable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"loanable\"]).to.eq(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"loanable\": true\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_loans_ef_borrows_ab_item_1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"loan_1_id\", pm.response.json()[\"id\"]);\r",
+							"\r",
+							"\r",
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    // Only partial validation here\r",
+							"    pm.expect(pm.response.json()[\"due_date\"]).to.eq(\"2028-01-30\");\r",
+							"    pm.expect(pm.response.json()[\"end_date\"]).to.eq(null);\r",
+							"    pm.expect(pm.response.json()[\"end_type\"]).to.eq(null);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"item\": {{ab_item_1_id}},\r\n    \"due_date\": \"2028-01-30\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch_item_ab_1_fail_since_on_loan",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    // Only partial validation here\r",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Cannot modify loaned item\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"loanable\": false\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put_item_ab_1_fail_since_on_loan",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Cannot modify loaned item\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Blah\",\r\n    \"description\": \"Something something\",\r\n    \"value\": 1,\r\n    \"loanable\": false\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_item_ab_1_fail_since_on_loan",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    // Only partial validation here\r",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Cannot delete loaned item\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_loans_ab_borrows_ef_item_1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"loan_2_id\", pm.response.json()[\"id\"]);\r",
+							"\r",
+							"\r",
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    // Only partial validation here\r",
+							"    pm.expect(pm.response.json()[\"due_date\"]).to.eq(\"2028-02-04\");\r",
+							"    pm.expect(pm.response.json()[\"end_date\"]).to.eq(null);\r",
+							"    pm.expect(pm.response.json()[\"end_type\"]).to.eq(null);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"item\": {{ef_item_1_id}},\r\n    \"due_date\": \"2028-02-04\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_loans_ab_borrows_ef_item_3_fail_not_loanable",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Invalid loan\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"item\": {{ef_item_3_id}},\r\n    \"due_date\": \"2028-03-05\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_loans_ab_borrows_ef_item_1_again_fail_not_available",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Item not available\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"item\": {{ef_item_1_id}},\r\n    \"due_date\": \"2028-02-05\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post_loans_ef_borrows_ab_item_2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"loan_3_id\", pm.response.json()[\"id\"]);\r",
+							"\r",
+							"\r",
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    // Only partial validation here\r",
+							"    pm.expect(pm.response.json()[\"due_date\"]).to.eq(\"2028-07-20\");\r",
+							"    pm.expect(pm.response.json()[\"end_date\"]).to.eq(null);\r",
+							"    pm.expect(pm.response.json()[\"end_type\"]).to.eq(null);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"item\": {{ab_item_2_id}},\r\n    \"due_date\": \"2028-07-20\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_loans_ef",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"loans\"].length).to.eq(2);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_loans_ab",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"loans\"].length).to.eq(1);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_loans_bad_jwt_fail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_loan_1_as_lender",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans/{{loan_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans",
+						"{{loan_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_loan_1_as_borrower",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans/{{loan_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans",
+						"{{loan_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_loan_1_bad_jwt_fail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans/{{loan_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans",
+						"{{loan_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put_loan_1_lender_extends_loan",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    // Only partial validation here\r",
+							"    pm.expect(pm.response.json()[\"due_date\"]).to.eq(\"2028-10-31\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"due_date\": \"2028-10-31\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans/{{loan_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans",
+						"{{loan_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put_loan_1_borrower_tries_to_extend_loan_fails",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    // Only partial validation here\r",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Item not owned\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"due_date\": \"2099-05-01\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans/{{loan_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans",
+						"{{loan_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch_loan_1_borrower_tries_to_close_loan_fails",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Cannot end loan\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"end_type\": \"forgiven\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans/{{loan_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans",
+						"{{loan_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch_loan_1_borrower_tries_to_delete_loan_fails",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Open loans cannot be deleted\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans/{{loan_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans",
+						"{{loan_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch_loan_1_lender_closes_loan",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"end_type\"]).to.eq(\"returned\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"end_type\": \"returned\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans/{{loan_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans",
+						"{{loan_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_item_ab_1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_loan_1_as_lender_fail_since_item_deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Loan not available\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans/{{loan_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans",
+						"{{loan_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_loan_1_as_lender_fail_since_not_borrower",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Loan never held\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans/{{loan_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans",
+						"{{loan_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_loan_1_as_borrower",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans/{{loan_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans",
+						"{{loan_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch_loan_2_lender_closes_loan_fail_bad_reason",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"Error\"]).to.eq(\"The request object has invalid attributes\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"end_type\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans/{{loan_2_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans",
+						"{{loan_2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch_loan_2_lender_closes_loan",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"end_type\"]).to.eq(\"forgiven\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"end_type\": \"forgiven\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans/{{loan_2_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans",
+						"{{loan_2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_loan_2_as_borrower",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans/{{loan_2_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans",
+						"{{loan_2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "patch_loan_3_lender_closes_loan",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"end_type\"]).to.eq(\"replaced\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"end_type\": \"replaced\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans/{{loan_3_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans",
+						"{{loan_3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_loan_3_as_borrower",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/loans/{{loan_3_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"loans",
+						"{{loan_3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_item_not_the_owner",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_2_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_item_invalid_id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{invalid_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{invalid_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_item_ab_2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_2_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_item_ab_3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_3_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_item_ab_4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_4_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_4_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_item_ab_5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_5_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_5_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_item_ab_6",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ab_item_6_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ab_item_6_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_item_ef_1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ef_item_1_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ef_item_1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_item_ef_2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ef_item_2_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ef_item_2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete_item_ef_3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items/{{ef_item_3_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items",
+						"{{ef_item_3_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_items_ab_empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"items\"].length).to.eq(0);\r",
+							"    pm.expect(pm.response.text()).to.not.include(\"next\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ab_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_items_ef_empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"items\"].length).to.eq(0);\r",
+							"    pm.expect(pm.response.text()).to.not.include(\"next\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{ef_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_items_public_empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"status code\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"content is valid\", function () {\r",
+							"    pm.expect(pm.response.json()[\"items\"].length).to.eq(0);\r",
+							"    pm.expect(pm.response.text()).to.not.include(\"next\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/items",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
